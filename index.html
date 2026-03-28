@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonsuz Sevgi ve Hello Kitty 🎀</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffdae9; /* Yumuşak Hello Kitty Pembesi */
+            background-image: radial-gradient(#ffffff 15%, transparent 16%), radial-gradient(#ffffff 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px; /* Puantiyeli arka plan */
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+        }
+
+        /* Yağan Gerçek Hello Kitty Resimleri */
+        .falling-kitty {
+            position: absolute;
+            width: 70px; 
+            height: auto;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(3px 3px 5px rgba(255,20,147,0.3));
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 60px;
+            border: 10px solid #ff69b4;
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(255, 20, 147, 0.6);
+            z-index: 100;
+            position: relative;
+            max-width: 420px;
+            width: 85%;
+            animation: cardAppear 1s ease-out;
+        }
+
+        .main-kitty-img {
+            width: 150px;
+            margin-bottom: 10px;
+            animation: bounce 1.5s infinite alternate ease-in-out;
+        }
+
+        h1 { color: #ff1493; margin: 10px 0; font-size: 26px; text-shadow: 2px 2px white; }
+        p { color: #ff69b4; font-size: 18px; font-weight: bold; }
+
+        .btn-start {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+            transition: 0.3s;
+            margin-top: 25px;
+            text-transform: uppercase;
+        }
+
+        .btn-start:hover { transform: scale(1.1) rotate(2deg); background: #ff1493; }
+
+        @keyframes fall {
+            from { transform: translateY(-150px) rotate(0deg); }
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-25px); }
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="mySong" loop>
+        <source src="https://files.catbox.moe/t9z5z3.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="main-card">
+        <img src="https://www.pngall.com/wp-content/uploads/2016/06/Hello-Kitty-PNG-File.png" class="main-kitty-img" alt="Hello Kitty">
+        <h1>Canım Arkadaşım!</h1>
+        <p>Senin için özel bir sürpriz... 🎀</p>
+        <button class="btn-start" onclick="baslat()">Müziği ve Sevgiyi Başlat 💖</button>
+    </div>
+
+    <script>
+        function baslat() {
+            const song = document.getElementById('mySong');
+            song.play();
+            
+            const btn = document.querySelector('.btn-start');
+            btn.innerText = "Seni Çok Seviyorum! ❤️";
+            btn.style.background = "#ff1493";
+            
+            // Yağmuru başlat
+            setInterval(createKitty, 350);
+        }
+
+        function createKitty() {
+            const kitty = document.createElement('img');
+            
+            // Gerçek Hello Kitty PNG linkleri
+            const images = [
+                "https://www.pngall.com/wp-content/uploads/2016/06/Hello-Kitty-PNG-File.png",
+                "https://www.pngall.com/wp-content/uploads/2016/06/Hello-Kitty-Free-PNG-Image.png",
+                "https://www.pngall.com/wp-content/uploads/2016/06/Hello-Kitty-PNG-Image.png"
+            ];
+            
+            kitty.src = images[Math.floor(Math.random() * images.length)];
+            kitty.className = 'falling-kitty';
+            
+            // Rastgele konum ve hız
+            kitty.style.left = Math.random() * 95 + "vw";
+            kitty.style.top = "-150px";
+            
+            const speed = Math.random() * 2 + 3; // 3 ile 5 saniye arası
+            kitty.style.animation = `fall ${speed}s linear forwards`;
+            
+            document.body.appendChild(kitty);
+            
+            // Belleği temizlemek için düşenleri sil
+            setTimeout(() => { kitty.remove(); }, speed * 1000);
+        }
+    </script>
+</body>
+</html>
